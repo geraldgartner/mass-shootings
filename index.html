@@ -81,14 +81,14 @@
         month = d3.time.format("%m"), // month number
         year = d3.time.format("%Y"),
         percent = d3.format(".1%"),
-        format = d3.time.format("%Y-%m-%d");
+        format = d3.time.format("%d.%m");
 
     var color = d3.scale.quantize()
         .domain([-.05, .05])
         .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
 
     var svg = d3.select("#chart").selectAll("svg")
-        .data(d3.range(2008, 2011))
+        .data(d3.range(2016, 2017))
       .enter().append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -150,10 +150,10 @@
       .style("visibility", "hidden")
       .text("a simple tooltip");
 
-    d3.csv("dji.csv", function(error, csv) {
+    d3.csv("mst.csv", function(error, csv) {
       var data = d3.nest()
-        .key(function(d) { return d.Date; })
-        .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
+        .key(function(d) { return d.date; })
+        .rollup(function(d) { return d.killed; })
         .map(csv);
 
       rect.filter(function(d) { return d in data; })
